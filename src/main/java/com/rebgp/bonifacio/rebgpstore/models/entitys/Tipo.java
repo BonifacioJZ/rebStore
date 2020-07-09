@@ -1,13 +1,21 @@
 package com.rebgp.bonifacio.rebgpstore.models.entitys;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+
+
 
 @Entity
 @Table(name = "types")
@@ -23,16 +31,28 @@ public class Tipo  implements Serializable{
     @NotEmpty
     private String description;
 
+   
+    @OneToMany(mappedBy = "tipo",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Service> services;
+
 
     public Tipo() {
+        services = new ArrayList<Service>();
     }
 
 
-    public Tipo(Long id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
+    public List<Service> getServices() {
+        return this.services;
     }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public void addService(Service service){
+        services.add(service);
+    }
+   
 
 
     public Long getId() {
@@ -59,6 +79,7 @@ public class Tipo  implements Serializable{
         this.description = description;
     }
 
-
-
+    private static final long serialVersionUID = 3L;
 }
+
+

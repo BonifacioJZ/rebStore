@@ -1,18 +1,20 @@
 package com.rebgp.bonifacio.rebgpstore.models.entitys;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "services")
@@ -25,13 +27,11 @@ public class Service implements Serializable {
 
     @Column(name = "name")
     @NotEmpty
-    @Min(value = 1)
-    @Max(value = 1000)
+    @Size(max=500,min=1)
     private String nombre;
 
     @NotEmpty
-    @Max(value = 10000)
-    @Min(value = 1)
+    @Size(max=1000,min=1)
     private String descripcion;
 
     @NotEmpty
@@ -43,22 +43,16 @@ public class Service implements Serializable {
     private double comision;
 
     @NotEmpty
-    @Max(value = 15)
-    @Min(value = 10)
+    @Size(max = 15,min=10)
     private String numero;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tipo tipo;
 
     public Service() {
     }
 
-
-    public Service(Long id, String nombre, String descripcion, double precio, double comision, String numero) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.comision = comision;
-        this.numero = numero;
-    }
+    
 
 
     public Long getId() {

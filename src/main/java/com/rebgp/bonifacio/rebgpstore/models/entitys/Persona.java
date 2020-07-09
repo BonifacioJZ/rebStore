@@ -10,9 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "peoples")
@@ -26,26 +25,18 @@ public class Persona  implements Serializable {
 
     @Column(name = "name")
     @NotEmpty
-    @Min(value = 1)
-    @Max(value = 500)
+    @Size(max = 500,min=1)
     private String  nombre;
 
     @Column(name="last_name")
     @NotEmpty
-    @Min(value = 1)
-    @Max(value = 500)
+    @Size(max = 500,min = 1)
     private String apellidos;
 
 
     public Persona() {
     }
 
-
-    public Persona(final Long id, final String nombre, final String apellidos) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-    }
 
     public Long getId() {
         return this.id;
